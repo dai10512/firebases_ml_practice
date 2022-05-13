@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1083372275086",
+    "project_id": "ml-practice-4ea72",
+    "storage_bucket": "ml-practice-4ea72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083372275086:android:99ff626a213da6a3d290df",
+        "android_client_info": {
+          "package_name": "com.example.firebase_ml_practice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083372275086-b480uc53qvspe8et1spom090uncnmm50.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALSd4ROzlvANJz3Q1l-cmw--ZsszR86I4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083372275086-b480uc53qvspe8et1spom090uncnmm50.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
