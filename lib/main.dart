@@ -3,17 +3,42 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ml_practice/firebase_options.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'firebase_config.dart';
 import 'tabs_page.dart';
 
 Future<void> main() async {
+  var platformName = '';
+  if (kIsWeb) {
+    platformName = "Web";
+  } else {
+    if (Platform.isAndroid) {
+      platformName = "Android";
+    } else if (Platform.isIOS) {
+      platformName = "IOS";
+    } else if (Platform.isFuchsia) {
+      platformName = "Fuchsia";
+    } else if (Platform.isLinux) {
+      platformName = "Linux";
+    } else if (Platform.isMacOS) {
+      platformName = "MacOS";
+    } else if (Platform.isWindows) {
+      platformName = "Windows";
+    }
+  }
+  print("platformName :- " + platformName.toString());
+
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseConfig.platformOptions);
+  await Firebase.initializeApp(
+
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -21,8 +46,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +66,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({
+  const MyHomePage({
     Key? key,
     required this.title,
     required this.analytics,
@@ -102,9 +126,13 @@ class _MyHomePageState extends State<MyHomePage> {
     setMessage('setAnalyticsCollectionEnabled succeeded');
   }
 
+  // Future<void> _testSetSessionTimeoutDuration() async {
+  //   await widget.analytics.setSessionTimeoutDuration(const Duration(milliseconds: 20000));
+  //   setMessage('setSessionTimeoutDuration succeeded');
+  // }
+
   Future<void> _testSetSessionTimeoutDuration() async {
-    await widget.analytics
-        .setSessionTimeoutDuration(const Duration(milliseconds: 20000));
+    await widget.analytics.setSessionTimeoutDuration(const Duration(milliseconds: 2));
     setMessage('setSessionTimeoutDuration succeeded');
   }
 
@@ -186,8 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
       level: 70,
       character: 'tiefling cleric',
     );
-    await widget.analytics
-        .logPurchase(currency: 'USD', transactionId: 'transaction-id');
+    await widget.analytics.logPurchase(currency: 'USD', transactionId: 'transaction-id');
     await widget.analytics.logSearch(
       searchTerm: 'hotel',
       numberOfNights: 2,
@@ -273,41 +300,44 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[
-          MaterialButton(
-            onPressed: _sendAnalyticsEvent,
-            child: const Text('Test logEvent'),
-          ),
-          MaterialButton(
-            onPressed: _testAllEventTypes,
-            child: const Text('Test standard event types'),
-          ),
-          MaterialButton(
-            onPressed: _testSetUserId,
-            child: const Text('Test setUserId'),
-          ),
-          MaterialButton(
-            onPressed: _testSetCurrentScreen,
-            child: const Text('Test setCurrentScreen'),
-          ),
-          MaterialButton(
-            onPressed: _testSetAnalyticsCollectionEnabled,
-            child: const Text('Test setAnalyticsCollectionEnabled'),
-          ),
-          MaterialButton(
-            onPressed: _testSetSessionTimeoutDuration,
-            child: const Text('Test setSessionTimeoutDuration'),
-          ),
-          MaterialButton(
-            onPressed: _testSetUserProperty,
-            child: const Text('Test setUserProperty'),
-          ),
-          Text(
-            _message,
-            style: const TextStyle(color: Color.fromARGB(255, 0, 155, 0)),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 50),
+            MaterialButton(
+              onPressed: _sendAnalyticsEvent,
+              child: const Text('Test logEvent'),
+            ),
+            MaterialButton(
+              onPressed: _testAllEventTypes,
+              child: const Text('Test standard event types'),
+            ),
+            MaterialButton(
+              onPressed: _testSetUserId,
+              child: const Text('Test setUserId'),
+            ),
+            MaterialButton(
+              onPressed: _testSetCurrentScreen,
+              child: const Text('Test setCurrentScreen'),
+            ),
+            MaterialButton(
+              onPressed: _testSetAnalyticsCollectionEnabled,
+              child: const Text('Test setAnalyticsCollectionEnabled'),
+            ),
+            MaterialButton(
+              onPressed: _testSetSessionTimeoutDuration,
+              child: const Text('Test setSessionTimeoutDuration'),
+            ),
+            MaterialButton(
+              onPressed: _testSetUserProperty,
+              child: const Text('Test setUserProperty'),
+            ),
+            Text(
+              _message,
+              style: const TextStyle(color: Color.fromARGB(255, 0, 155, 0)),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

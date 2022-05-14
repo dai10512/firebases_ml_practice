@@ -29,6 +29,13 @@
             {
               "client_id": "1083372275086-b480uc53qvspe8et1spom090uncnmm50.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1083372275086-ssq82pvjn4n26nsutqi1vatas935qpj6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseMlPractice"
+              }
             }
           ]
         }
